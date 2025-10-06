@@ -1,12 +1,13 @@
-#DeepECtransformer
-##Procedure
+# DeepECtransformer
+
+## Procedure
 
 **Note**: 
 This source code was developed in Linux, and has been tested in Ubuntu 16.04 with Python 3.6.
 
 1. Clone the repository
 
-        git clone https://github.com/kaistsystemsbiology/DeepProZyme.git
+        git clone https://github.com/ri-heme/DeepProZyme.git
 
 2. Create and activate virtual environment (takes 5~10 min)
 
@@ -17,7 +18,7 @@ This source code was developed in Linux, and has been tested in Ubuntu 16.04 wit
 
 
 
-##Example
+## Example
 
 
 - Run DeepECtransformer (takes < 1 min)
