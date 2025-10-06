@@ -5,10 +5,10 @@ import subprocess
 BLAST_HEADERS = "qseqid sseqid evalue bitscore score qlen slen length pident"
 
 
-def run_blastp(target_fasta, blastp_result, db_dir, threads=1):
+def run_blastp(target_fasta_path, blastp_result_path, db_dir, threads=1):
     logging.info("BLASTp prediction starts on the dataset")
     subprocess.call(
-        f"diamond blastp -d {db_dir} -q {target_fasta} -o {blastp_result} "
+        f"diamond blastp -d {db_dir} -q {target_fasta_path} -o {blastp_result_path} "
         f"--threads {threads} --id 50 --outfmt 6 {BLAST_HEADERS}",
         shell=True,
         stderr=subprocess.STDOUT,
@@ -24,7 +24,7 @@ def read_best_blast_result(blastp_result):
             query_id = line["qseqid"]
             db_id = line["sseqid"]
 
-            ec_numbers = db_id.split("|")[1].strip()
+            ec_numbers = db_id.split(maxsplit=1)[0].split("|")[1]
             score = float(line["score"])
             qlen = float(line["qlen"])
             length = float(line["length"])
@@ -42,17 +42,13 @@ def read_best_blast_result(blastp_result):
                         query_db_set_info[query_id] = [ec_numbers, score]
                     # Merge results if multiple best hits
                     elif score == prev_score:
-                        query_db_set_info[query_id][0] += ec_numbers
+                        query_db_set_info[query_id][0] += f";{ec_numbers}"
 
     # Format EC numbers as string separated with semicolon
     output_dict = {}
     for query_id, (ec_numbers, _) in query_db_set_info.items():
-        ec_fmt = set()
-        for ec_num in ec_numbers.split(";"):
-            if not ec_num.startswith("EC:"):
-                ec_num = f"EC:{ec_num}"
-            ec_fmt.add(ec_num)
-        output_dict[query_id] = ";".join(sorted(ec_fmt))
+        ec_unique = set(ec_numbers.split(";"))
+        output_dict[query_id] = ";".join(sorted(ec_unique))
 
     return query_db_set_info
 
