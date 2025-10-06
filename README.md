@@ -1,5 +1,7 @@
 # DeepECtransformer
 
+This repo is a clone of [`kaistsystemsbiology/DeepProZyme`](https://github.com/kaistsystemsbiology/DeepProZyme).
+
 ## Procedure
 
 **Note**: 
