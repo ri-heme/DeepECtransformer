@@ -4,7 +4,7 @@ import logging
 
 import numpy as np
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data.dataloader import DataLoader
 
 from deepec.process_data import read_EC_actual_Fasta
 from deepec.data_loader import DeepECDataset
